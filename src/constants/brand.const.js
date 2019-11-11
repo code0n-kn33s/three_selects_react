@@ -1,0 +1,3 @@
+export const BRAND_REQUEST = "BRAND_REQUEST"
+export const BRAND_RESPONSE = "BRAND_RESPONSE"
+export const BRAND_ERROR = "BRAND_ERROR"

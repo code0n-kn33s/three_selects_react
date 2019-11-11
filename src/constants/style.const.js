@@ -1,0 +1,3 @@
+export const STYLE_REQUEST = "STYLE_REQUEST"
+export const STYLE_RESPONSE = "STYLE_RESPONSE"
+export const STYLE_ERROR = "STYLE_ERROR"

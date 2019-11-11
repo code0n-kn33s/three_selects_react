@@ -1,0 +1,3 @@
+export const SERV_REQUEST = "SERV_REQUEST"
+export const SERV_RESPONSE = "SERV_RESPONSE"
+export const SERV_ERROR = "SERV_ERROR"
