@@ -1,28 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import { getDataStyles } from '../../../actions'
 
 class Styles extends React.Component {
-  state = {
-    currentValue: null
-  }
-
   componentDidMount() {
     this.props.getData()
   }
 
-  handleChange = ( e ) => {
-    const value = e.target.value
-
-    this.setState({
-      currentValue: value
-    })
-  }
-
   render() {
-    const { data, loading } = this.props
-    const { currentValue } = this.state
+    const { data, loading, handleChange } = this.props
+    const { style_slug } = this.props.match.params
 
     return (
       <div className="terms-col">
@@ -37,18 +26,17 @@ class Styles extends React.Component {
         </div>
         <div className="terms-col-current">
           {
-            currentValue ?
-            `Значение: ${currentValue}` :
+            style_slug !== ':style_slug' ?
+            `Значение: ${style_slug}` :
             'Пока что ничего не выбрано из стилей'
           }
         </div>
         <select
           className="terms-col-select"
-          onChange={ this.handleChange }
-          defaultValue="disabled-value"
+          onChange={ (e) => handleChange(e, 'styles' ) }
+          value={ style_slug !== ':style_slug' ? style_slug : "disabled-value" }
         >
           <option
-            disabled
             value="disabled-value"
           >
             Выберите стиль
@@ -84,4 +72,4 @@ const MapDispatchToProps = ( dispatch ) => ({
   }
 })
 
-export default connect(MapStateToProps, MapDispatchToProps)(Styles)
+export default withRouter(connect(MapStateToProps, MapDispatchToProps)(Styles))

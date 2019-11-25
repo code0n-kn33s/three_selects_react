@@ -15,6 +15,5 @@
 
 3. При обновлении страницы отображение выбранных значений выпадающих списков не должны пропадать
 - Получение значений для выпадающих списков - api/test/v1/search/parse_link
-~ 50 минут Вам потребуется на решение
 
 Документация swagger - https://beta.autobooking.com/api-docs/index.html?urls.primaryName=Test%20API%20V1%20Docs

@@ -1,28 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import { getDataBrands } from '../../../actions'
 
 class Brands extends React.Component {
-  state = {
-    currentValue: null
-  }
-
   componentDidMount() {
     this.props.getData()
   }
 
-  handleChange = ( e ) => {
-    const value = e.target.value
-
-    this.setState({
-      currentValue: value
-    })
-  }
-
   render() {
-    const { data, loading } = this.props
-    const { currentValue } = this.state
+    const { data, loading, handleChange } = this.props
+    const { brand_slug } = this.props.match.params
 
     return (
       <div className="terms-col">
@@ -37,18 +26,17 @@ class Brands extends React.Component {
         </div>
         <div className="terms-col-current">
           {
-            currentValue ?
-            `Значение: ${currentValue}` :
+            brand_slug !== ':brand_slug' ?
+            `Значение: ${brand_slug}` :
             'Пока что ничего не выбрано из брендов'
           }
         </div>
         <select
           className="terms-col-select"
-          onChange={ this.handleChange }
-          defaultValue="disabled-value"
+          onChange={ (e) => handleChange(e, 'brands' ) }
+          value={brand_slug !== ':brand_slug' ? brand_slug : "disabled-value"}
         >
           <option
-            disabled
             value="disabled-value"
           >
             Выберите бренд
@@ -64,11 +52,11 @@ class Brands extends React.Component {
                   { item.label}
                 </option>
               )
-            ) 
+            )
           }
         </select>
       </div>
-    );
+    )
   }
 }
 
@@ -84,4 +72,4 @@ const MapDispatchToProps = ( dispatch ) => ({
   }
 })
 
-export default connect(MapStateToProps, MapDispatchToProps)(Brands)
+export default withRouter(connect(MapStateToProps, MapDispatchToProps)(Brands))

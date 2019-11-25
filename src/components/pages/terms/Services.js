@@ -1,28 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import { getDataServ } from '../../../actions'
 
 class Serv extends React.Component {
-  state = {
-    currentValue: null
-  }
-
   componentDidMount() {
     this.props.getData()
   }
 
-  handleChange = ( e ) => {
-    const value = e.target.value
-
-    this.setState({
-      currentValue: value
-    })
-  }
-
   render() {
-    const { data, loading } = this.props
-    const { currentValue } = this.state
+    const { data, loading, handleChange } = this.props
+    const { service_slug } = this.props.match.params
 
     return (
       <div className="terms-col">
@@ -37,19 +26,18 @@ class Serv extends React.Component {
         </div>
         <div className="terms-col-current">
           {
-            currentValue ?
-            `Значение: ${currentValue}` :
+            service_slug !== ':service_slug' ?
+            `Значение: ${service_slug}` :
             'Пока что ничего не выбрано из услуг'
           }
         </div>
         <select
           className="terms-col-select"
-          onChange={ this.handleChange }
-          defaultValue="disabled-value"
+          onChange={ (e) => handleChange(e, 'services' ) }
+          value={service_slug !== ':service_slug' ? service_slug : 'default'}
         >
           <option
-            disabled 
-            value="disabled-value"
+            value='default'
           >
             Выберите услугу
           </option>
@@ -84,4 +72,4 @@ const MapDispatchToProps = ( dispatch ) => ({
   }
 })
 
-export default connect(MapStateToProps, MapDispatchToProps)(Serv)
+export default withRouter(connect(MapStateToProps, MapDispatchToProps)(Serv))

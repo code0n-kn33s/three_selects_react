@@ -12,7 +12,7 @@ class Root extends Component {
   render() {
     return (
       <Provider store = { store }>
-        <BrowserRouter forceRefresh={!supportsHistory}>
+        <BrowserRouter forceRefresh={ !supportsHistory }>
           <Route component={ App } />
         </BrowserRouter>
       </Provider>

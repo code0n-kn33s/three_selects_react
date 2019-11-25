@@ -6,6 +6,20 @@ import {
 
 const initialState = {
   data: null,
+  // data: [
+  //   {
+  //     slug: 's1-slug1',
+  //     label: 's1-label1'
+  //   },
+  //   {
+  //     slug: 's2-slug2',
+  //     label: 's2-label2'
+  //   },
+  //   {
+  //     slug: 's3-slug3',
+  //     label: 's3-label3'
+  //   }
+  // ],
   loading: false,
   error: null
 };
