@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import Services from './Services'
 import Brands from './Brands'
 import Styles from './Styles'
+
+import { dataSearch } from '../../../actions'
 
 class Terms extends React.Component {
   state = {
@@ -27,25 +30,29 @@ class Terms extends React.Component {
 
   handleChange = (e, target ) => {
     new Promise( (resolve) => {
-      resolve({ 
-        [target]: e.target.value 
-      }) 
+      resolve({
+        [target]: e.target.value
+      })
     })
     .then((data) => {
       this.setState(data)
+    })
+    .then(() => {
+      this.finalRequest()
     })
     .then(() => {
       this.redirect()
     })
   }
 
-  finalRequest = (data) => {
-    if ( 
-      this.state.services !== ':service_slug' && 
-      this.state.brands !== ':brand_slug' && 
-      this.state.styles !== ':style_slug' 
+  finalRequest = () => {
+    const { services, brands, styles } = this.state
+    if (
+      this.state.services !== ':service_slug' &&
+      this.state.brands !== ':brand_slug' &&
+      this.state.styles !== ':style_slug'
     ) {
-      return true
+      return this.props.getDataSearch({ services, brands, styles })
     }
   }
 
@@ -64,9 +71,8 @@ class Terms extends React.Component {
   }
 
   render() {
-    // const { services, brands, styles } = this.state
-    
-    this.finalRequest() && console.log('yep')
+    const { data, loading } = this.props
+
     return (
       <div className="terms-wrap">
         <h1>Выберите значения:</h1>
@@ -78,9 +84,40 @@ class Terms extends React.Component {
           <Brands handleChange={this.handleChange}/>
           <Styles handleChange={this.handleChange}/>
         </div>
+        {
+          data && (
+            !loading ? (
+            <div className="terms-order">
+              <h2>Поздравляю! Вы сделали заказ :</h2>
+              <ul>
+                <li><b>Название услуги - </b>{data.service.label}</li>
+                <li><b>Марка - </b>{data.brand.label}</li>
+                <li><b>Стиль - </b>{data.style.label}</li>
+              </ul>
+            </div>
+            ) : (
+              <div>
+                <svg className="spinner" viewBox="0 0 50 50">
+                  <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                </svg>
+              </div>
+            ))
+        }
       </div>
     )
   }
 }
 
-export default Terms
+// REDUX
+const MapStateToProps = ( state ) => ({
+  data: state.terms.search.data,
+  loading: state.terms.search.loading
+})
+
+const MapDispatchToProps = ( dispatch ) => ({
+  getDataSearch: (data) => {
+    dispatch( dataSearch(data) )
+  }
+})
+
+export default connect(MapStateToProps, MapDispatchToProps)(Terms)

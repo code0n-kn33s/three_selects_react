@@ -1,2 +1,0 @@
-export const SET_TERMS_LINK = "SET_TERMS_LINK"
-export const RESET_TERMS_LINK = "RESET_TERMS_LINK"

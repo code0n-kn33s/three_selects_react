@@ -1,7 +1,7 @@
 import {
-  STYLE_REQUEST,
-  STYLE_RESPONSE,
-  STYLE_ERROR
+  SEARCH_REQUEST,
+  SEARCH_RESPONSE,
+  SEARCH_ERROR
 } from '../../constants'
 
 const initialState = {
@@ -10,22 +10,22 @@ const initialState = {
   error: null
 };
 
-const style = ( state = initialState, action) => {
+const search = ( state = initialState, action) => {
   switch( action.type ){
-    case STYLE_REQUEST:
+    case SEARCH_REQUEST:
       return {
         ...state,
         loading: true
       }
 
-    case STYLE_RESPONSE:
+    case SEARCH_RESPONSE:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
 
-    case STYLE_ERROR:
+    case SEARCH_ERROR:
       return {
         ...state,
         error: action.payload
@@ -35,4 +35,4 @@ const style = ( state = initialState, action) => {
   }
 }
 
-export default style
+export default search
